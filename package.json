@@ -1,0 +1,36 @@
+{
+  "name": "animated-video-generator",
+  "version": "1.0.0",
+  "description": "Generate animated videos from text prompts",
+  "main": "server/index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "nodemon server/index.js",
+    "client": "cd client && npm start",
+    "build": "cd client && npm run build",
+    "start": "node server/index.js",
+    "install-all": "npm install && cd client && npm install"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "multer": "^1.4.5-lts.1",
+    "ffmpeg-static": "^5.2.0",
+    "fluent-ffmpeg": "^2.1.2",
+    "canvas": "^2.11.2",
+    "fabric": "^5.3.0",
+    "uuid": "^9.0.1",
+    "dotenv": "^16.3.1",
+    "ws": "^8.14.2",
+    "sharp": "^0.32.6",
+    "gifencoder": "^2.0.1",
+    "puppeteer": "^21.5.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2",
+    "concurrently": "^8.2.2"
+  },
+  "keywords": ["video", "animation", "generator", "text-to-video"],
+  "author": "Video Generator",
+  "license": "MIT"
+}
