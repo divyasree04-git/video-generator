@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Video Generator - Create Animated Videos from Text</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-video"></i>
+                <h1>AI Video Generator</h1>
+            </div>
+            <nav class="nav">
+                <a href="#features">Features</a>
+                <a href="#gallery">Gallery</a>
+                <a href="#pricing">Pricing</a>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Create Amazing Animated Videos from Text</h2>
+                <p>Transform your ideas into stunning animated videos with AI. Generate any length video from simple text prompts.</p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">10K+</span>
+                        <span class="stat-label">Videos Created</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Animation Styles</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">4K</span>
+                        <span class="stat-label">HD Quality</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Video Generator Interface -->
+        <section class="generator-section">
+            <div class="generator-container">
+                <h3>Generate Your Video</h3>
+                
+                <!-- Input Form -->
+                <div class="input-section">
+                    <div class="prompt-container">
+                        <label for="prompt">Describe your video:</label>
+                        <textarea 
+                            id="prompt" 
+                            placeholder="e.g., A cute cat dancing in a colorful garden with butterflies flying around, cartoon style animation lasting 30 seconds"
+                            rows="4"
+                        ></textarea>
+                    </div>
+
+                    <div class="options-grid">
+                        <div class="option-group">
+                            <label for="duration">Duration (seconds):</label>
+                            <select id="duration">
+                                <option value="10">10 seconds</option>
+                                <option value="30" selected>30 seconds</option>
+                                <option value="60">1 minute</option>
+                                <option value="120">2 minutes</option>
+                                <option value="300">5 minutes</option>
+                                <option value="600">10 minutes</option>
+                                <option value="custom">Custom</option>
+                            </select>
+                            <input type="number" id="customDuration" placeholder="Enter seconds" style="display: none;">
+                        </div>
+
+                        <div class="option-group">
+                            <label for="style">Animation Style:</label>
+                            <select id="style">
+                                <option value="cartoon">Cartoon</option>
+                                <option value="realistic">Realistic</option>
+                                <option value="anime">Anime</option>
+                                <option value="3d">3D Animation</option>
+                                <option value="watercolor">Watercolor</option>
+                                <option value="sketch">Sketch</option>
+                                <option value="pixel">Pixel Art</option>
+                                <option value="abstract">Abstract</option>
+                                <option value="cinematic">Cinematic</option>
+                                <option value="vintage">Vintage</option>
+                            </select>
+                        </div>
+
+                        <div class="option-group">
+                            <label for="resolution">Resolution:</label>
+                            <select id="resolution">
+                                <option value="720p">HD (720p)</option>
+                                <option value="1080p" selected>Full HD (1080p)</option>
+                                <option value="4k">4K Ultra HD</option>
+                            </select>
+                        </div>
+
+                        <div class="option-group">
+                            <label for="fps">Frame Rate:</label>
+                            <select id="fps">
+                                <option value="24">24 FPS</option>
+                                <option value="30" selected>30 FPS</option>
+                                <option value="60">60 FPS</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="advanced-options">
+                        <button type="button" class="toggle-advanced">
+                            <i class="fas fa-cog"></i> Advanced Options
+                        </button>
+                        <div class="advanced-panel" style="display: none;">
+                            <div class="option-group">
+                                <label for="music">Background Music:</label>
+                                <select id="music">
+                                    <option value="none">No Music</option>
+                                    <option value="upbeat">Upbeat</option>
+                                    <option value="calm">Calm</option>
+                                    <option value="dramatic">Dramatic</option>
+                                    <option value="electronic">Electronic</option>
+                                    <option value="classical">Classical</option>
+                                </select>
+                            </div>
+                            <div class="option-group">
+                                <label for="voiceover">Voice Over:</label>
+                                <select id="voiceover">
+                                    <option value="none">No Voice</option>
+                                    <option value="male">Male Voice</option>
+                                    <option value="female">Female Voice</option>
+                                    <option value="child">Child Voice</option>
+                                    <option value="robot">Robot Voice</option>
+                                </select>
+                            </div>
+                            <div class="option-group">
+                                <label for="transitions">Transitions:</label>
+                                <select id="transitions">
+                                    <option value="smooth">Smooth</option>
+                                    <option value="quick">Quick Cuts</option>
+                                    <option value="fade">Fade</option>
+                                    <option value="slide">Slide</option>
+                                    <option value="zoom">Zoom</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="generate-btn" id="generateBtn">
+                        <i class="fas fa-magic"></i>
+                        Generate Video
+                    </button>
+                </div>
+
+                <!-- Progress Section -->
+                <div class="progress-section" id="progressSection" style="display: none;">
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="progress-text" id="progressText">Initializing...</div>
+                        <div class="progress-steps">
+                            <div class="step active" id="step1">
+                                <i class="fas fa-brain"></i>
+                                <span>Analyzing Prompt</span>
+                            </div>
+                            <div class="step" id="step2">
+                                <i class="fas fa-palette"></i>
+                                <span>Creating Scenes</span>
+                            </div>
+                            <div class="step" id="step3">
+                                <i class="fas fa-film"></i>
+                                <span>Rendering Video</span>
+                            </div>
+                            <div class="step" id="step4">
+                                <i class="fas fa-download"></i>
+                                <span>Finalizing</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="cancel-btn" id="cancelBtn">Cancel Generation</button>
+                </div>
+
+                <!-- Result Section -->
+                <div class="result-section" id="resultSection" style="display: none;">
+                    <h4>Your Video is Ready!</h4>
+                    <div class="video-preview">
+                        <video id="generatedVideo" controls>
+                            <source src="" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="video-actions">
+                        <button class="download-btn" id="downloadBtn">
+                            <i class="fas fa-download"></i>
+                            Download Video
+                        </button>
+                        <button class="share-btn" id="shareBtn">
+                            <i class="fas fa-share"></i>
+                            Share
+                        </button>
+                        <button class="regenerate-btn" id="regenerateBtn">
+                            <i class="fas fa-redo"></i>
+                            Generate Another
+                        </button>
+                    </div>
+                    <div class="video-info">
+                        <div class="info-item">
+                            <span class="label">Duration:</span>
+                            <span class="value" id="videoDuration">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Resolution:</span>
+                            <span class="value" id="videoResolution">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Size:</span>
+                            <span class="value" id="videoSize">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="features-section">
+            <h3>Powerful Features</h3>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-magic"></i>
+                    </div>
+                    <h4>AI-Powered Generation</h4>
+                    <p>Advanced AI understands your text prompts and creates stunning animated videos automatically.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h4>Any Length Videos</h4>
+                    <p>Generate videos from 10 seconds to 10+ minutes. Perfect for social media, presentations, or storytelling.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h4>Multiple Styles</h4>
+                    <p>Choose from cartoon, realistic, anime, 3D, watercolor, and many more animation styles.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-hd-video"></i>
+                    </div>
+                    <h4>4K Quality</h4>
+                    <p>Generate videos in HD, Full HD, or 4K resolution with smooth 60fps animation.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <h4>Audio Integration</h4>
+                    <p>Add background music and AI-generated voiceovers to enhance your videos.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <h4>Instant Download</h4>
+                    <p>Download your videos immediately in MP4 format, ready to share anywhere.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="gallery-section">
+            <h3>Video Gallery</h3>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <div class="gallery-thumbnail">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div class="gallery-info">
+                        <h5>Dancing Cat Adventure</h5>
+                        <p>Cartoon style • 30s</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-thumbnail">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div class="gallery-info">
+                        <h5>Space Exploration</h5>
+                        <p>Cinematic • 2min</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-thumbnail">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div class="gallery-info">
+                        <h5>Watercolor Dreams</h5>
+                        <p>Watercolor • 1min</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-thumbnail">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div class="gallery-info">
+                        <h5>Robot City</h5>
+                        <p>3D Animation • 45s</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>AI Video Generator</h4>
+                    <p>Create amazing animated videos from text with the power of AI.</p>
+                </div>
+                <div class="footer-section">
+                    <h5>Features</h5>
+                    <ul>
+                        <li>Text to Video</li>
+                        <li>Multiple Styles</li>
+                        <li>4K Quality</li>
+                        <li>Instant Download</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h5>Support</h5>
+                    <ul>
+                        <li>Help Center</li>
+                        <li>Contact Us</li>
+                        <li>API Docs</li>
+                        <li>Community</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 AI Video Generator. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
