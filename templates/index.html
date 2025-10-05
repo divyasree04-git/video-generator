@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Animated Video Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-video"></i>
+                <h1>AI Video Generator</h1>
+            </div>
+            <p class="tagline">Create stunning animated videos from text prompts</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Generation Form -->
+            <section class="generator-section">
+                <div class="input-card">
+                    <h2><i class="fas fa-magic"></i> Generate Your Video</h2>
+                    
+                    <form id="generateForm">
+                        <div class="form-group">
+                            <label for="prompt">
+                                <i class="fas fa-pen"></i> Video Prompt
+                                <span class="required">*</span>
+                            </label>
+                            <textarea 
+                                id="prompt" 
+                                name="prompt" 
+                                rows="4" 
+                                placeholder="Describe the animated video you want to create... (e.g., 'A cute robot dancing in a futuristic city at sunset with neon lights')"
+                                required
+                            ></textarea>
+                            <div class="char-count">
+                                <span id="charCount">0</span> characters
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="duration">
+                                    <i class="fas fa-clock"></i> Duration (seconds)
+                                </label>
+                                <input 
+                                    type="number" 
+                                    id="duration" 
+                                    name="duration" 
+                                    min="3" 
+                                    max="60" 
+                                    value="5"
+                                    required
+                                >
+                                <small>3-60 seconds</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="style">
+                                    <i class="fas fa-palette"></i> Animation Style
+                                </label>
+                                <select id="style" name="style">
+                                    <option value="default">Default</option>
+                                    <option value="anime">Anime</option>
+                                    <option value="realistic">Realistic</option>
+                                    <option value="cartoon">Cartoon</option>
+                                    <option value="3d">3D Animation</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="examples">
+                            <p><strong>Example Prompts:</strong></p>
+                            <div class="example-tags">
+                                <span class="example-tag" onclick="setPrompt('A magical forest with glowing fireflies and mystical creatures at night')">🌟 Magical Forest</span>
+                                <span class="example-tag" onclick="setPrompt('A futuristic robot cooking in a high-tech kitchen')">🤖 Cooking Robot</span>
+                                <span class="example-tag" onclick="setPrompt('An astronaut floating in space with colorful nebulas in the background')">🚀 Space Explorer</span>
+                                <span class="example-tag" onclick="setPrompt('A cute cat playing piano in a cozy living room')">🎹 Musical Cat</span>
+                                <span class="example-tag" onclick="setPrompt('Underwater scene with dolphins and coral reefs with sunlight streaming through water')">🐬 Ocean Life</span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-generate" id="generateBtn">
+                            <i class="fas fa-wand-magic-sparkles"></i>
+                            Generate Video
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Progress Section -->
+            <section class="progress-section" id="progressSection" style="display: none;">
+                <div class="progress-card">
+                    <h3><i class="fas fa-spinner fa-spin"></i> Generating Your Video</h3>
+                    <div class="progress-info">
+                        <p id="progressMessage">Initializing...</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <p class="progress-percent" id="progressPercent">0%</p>
+                    </div>
+                    <div class="generation-details">
+                        <p><strong>Prompt:</strong> <span id="generatingPrompt"></span></p>
+                        <p><strong>Duration:</strong> <span id="generatingDuration"></span> seconds</p>
+                        <p><strong>Style:</strong> <span id="generatingStyle"></span></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Result Section -->
+            <section class="result-section" id="resultSection" style="display: none;">
+                <div class="result-card">
+                    <h3><i class="fas fa-check-circle"></i> Video Generated Successfully!</h3>
+                    
+                    <div class="video-container">
+                        <video id="generatedVideo" controls>
+                            <source id="videoSource" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+
+                    <div class="video-actions">
+                        <a href="#" id="downloadBtn" class="btn-download" download>
+                            <i class="fas fa-download"></i> Download Video
+                        </a>
+                        <button class="btn-secondary" onclick="resetForm()">
+                            <i class="fas fa-plus"></i> Generate Another
+                        </button>
+                    </div>
+
+                    <div class="video-info">
+                        <p><strong>Prompt Used:</strong> <span id="resultPrompt"></span></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- History Section -->
+            <section class="history-section">
+                <h3><i class="fas fa-history"></i> Recent Generations</h3>
+                <div id="historyContainer" class="history-grid">
+                    <p class="empty-state">No videos generated yet. Create your first video above!</p>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section class="features-section">
+                <h3>✨ Features</h3>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-robot"></i>
+                        <h4>AI-Powered</h4>
+                        <p>Advanced AI models generate stunning animations from your text descriptions</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-infinity"></i>
+                        <h4>Any Length</h4>
+                        <p>Create videos from 3 seconds to 60 seconds or more</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-paintbrush"></i>
+                        <h4>Multiple Styles</h4>
+                        <p>Choose from anime, realistic, cartoon, 3D and more styles</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-download"></i>
+                        <h4>Instant Download</h4>
+                        <p>Download your generated videos in high-quality MP4 format</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Made with <i class="fas fa-heart"></i> using AI Technology</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
